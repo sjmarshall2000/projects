@@ -1,0 +1,2 @@
+http://guide.robo3d.com/Wiki/ROBO_3D_Firmware_Release_Notes
+"ROBO R1 (Original) Firmware 3.0"
