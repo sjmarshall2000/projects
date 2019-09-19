@@ -1,0 +1,144 @@
+<!-- 	
+Stephen Marshall 6/3/19
+figuring out keyboard input
+
+M7lc1UVf-VE //youtube developer vid
+tzsZRse-qPE //ski footage test vid
+QDqskltCixA	//new earth video
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>website title</title>
+	</head>
+	<style>
+		body {
+			background-color: #000000;
+		}
+	</style>
+	<body>
+	
+		<!--<h1 id="id01">Old Heading</h1>-->
+		<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+		
+		<div id="player"></div>
+		
+		
+		<script>
+			
+			var aPlaying = true;
+			//in seconds:		(for Youtube)
+			var startA = 60;	
+			var endA = 75;		//15 sec videos
+			var startB = 120;
+			var endB = 135;
+			
+			//*not* in milliseconds	(for JavaScipt)
+			const lengthA = (endA - startA);// * 1000;
+			const lengthB = (endB - startB);// * 1000;
+			
+			
+			var timerID;
+			var timerRunning = false;
+			var videoID = "QDqskltCixA"; //confusing name, videoId is YT's own
+			
+			
+		
+			// 2. This code loads the IFrame Player API code asynchronously.
+			var tag = document.createElement('script');
+			
+			tag.src = "https://www.youtube.com/iframe_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+			
+			// 3. This function creates an <iframe> (and YouTube player)
+			//    after the API code downloads.
+			var player;
+			function onYouTubeIframeAPIReady() {
+				player = new YT.Player('player', {
+				height: '1040',
+				width: '100%',
+				videoId: videoID,
+				playerVars: {
+					'autoplay': 1,
+					//'cc_load_policy': 0,
+					'controls': 0,
+					'disablekb': 1,
+					//'iv_load_policy': 3,
+					//'modestbranding': 1,
+					//'rel': 0,
+					//'showinfo': 0,
+					'start': startA
+                },
+				events: {
+					'onReady': onPlayerReady,
+					'onStateChange': onPlayerStateChange
+				}
+				});
+			}
+			
+			// 4. The API will call this function when the video player is ready.
+			function onPlayerReady(event) {
+				event.target.playVideo();
+				event.target.setVolume(100);
+				setInterval(checkProgress, 500);
+			}
+		
+			// 5. The API calls this function when the player's state changes.
+			//    The function indicates that when playing a video (state=1),
+			//    the player should play for six seconds and then stop.
+			
+			function onPlayerStateChange(event) {
+				if (event.data === YT.PlayerState.PLAYING && !timerRunning) {
+				//setTimeout(player.seekTo, 2000, startA, true );
+				//timerRunning = true;
+				} 
+			}
+			function checkProgress(force=false) {	//restarts video if it has elapsed its time	
+				if(force){
+					if(aPlaying){player.seekTo(startA);}
+					else {player.seekTo(startB);}
+					return;
+				}
+				
+				var time = player.getCurrentTime();
+				if(aPlaying){//if A is selected
+					if(time > endA || time < startA){
+						player.seekTo(startA);
+					}
+				}else {		//if B is selected
+					if(time > endB || time < startB){
+						player.seekTo(startB);
+					}
+				}				
+			}
+			
+			function stopVideo() {
+				player.stopVideo();
+			}
+			
+			window.addEventListener("keydown", function (event) {
+				if(event.defaultPrevented) {
+					return; //do nothing if event already processed
+				}
+				switch (event.key) {
+					case "a":
+						aPlaying = true;
+						checkProgress(true);
+						break;
+					case "b":
+						aPlaying = false;
+						checkProgress(true);
+						break;
+					default:
+						return;
+				}
+				event.preventDefault();
+			}, true);
+		</script>
+		
+		
+	</body>
+</html>
+

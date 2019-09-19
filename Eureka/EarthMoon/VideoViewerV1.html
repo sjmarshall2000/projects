@@ -1,0 +1,97 @@
+<!-- 	
+Stephen Marshall 6/3/19
+figuring out keyboard input
+
+M7lc1UVf-VE? //youtube developer vid
+tzsZRse-qPE? //ski footage test vid
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--<title>website title</title>-->
+	</head>
+	<style>
+		body {
+			background-color: #000000;
+		}
+	</style>
+	<body>
+	
+		<!--<h1 id="id01">Old Heading</h1>-->
+		
+		<iframe id="ytplayer" type="text/html" style='width:100%; height:1060px;'
+		src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&start=60&controls=0&disablekb=1&loop=1&modestbranding=1"
+		frameborder="0" >
+		</iframe>
+		
+		<script>
+			//alert("beginning script");
+			//var element = document.getElementById("id01");
+			
+			//in seconds:		(for Youtube)
+			var startA = 60;	
+			var endA = 75;		//15 sec videos
+			var startB = 120;
+			var endB = 135;
+			
+			//in milliseconds	(for JavaScipt)
+			const lengthA = (endA - startA) * 1000;
+			const lengthB = (endB - startB) * 1000;
+			
+			
+			var timerID;
+			var timerIsRunning = false;
+			var videoID = "tzsZRse-qPE?";
+			
+			function swapVideo(sectionA) { //boolean true false
+				if(timerID !== null) {clearTimeout(timerID);}
+				timerID = null;
+				var start;
+				var len;
+				if(sectionA){start = startA; len = lengthA;}
+				else {start = startB; len = lengthB;}
+				
+				newSrc = "https://www.youtube.com/embed/" + videoID + "autoplay=1" + "&start=" + start + "&controls=0&disablekb=1&loop=1&modestbranding=1"
+				
+				//apply this to video player's source
+				document.getElementById("ytplayer").src=newSrc;
+				
+				
+				
+				//timerID = setTimeout(swapVideo, len, sectionA);
+			}	
+					
+			//alert("beginning listener");
+			window.addEventListener("keydown", function (event) {
+				if(event.defaultPrevented) {
+					return; //do nothing if event already processed
+				}
+				switch (event.key) {
+					case "a":
+						//do something - 60 sec
+						//alert("a");
+						swapVideo(true); //true means A
+						timerID = setTimeout(swapVideo, lengthA, true);
+						break;
+					case "b":
+						//alert("b");
+						//do something - 120 sec
+						//element.innerHTML = "B"; //not pretty below
+						//var newSrc = "https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&start=120&controls=0&disablekb=1&loop=1&modestbranding=1"
+						//document.getElementById("ytplayer").src=newSrc;
+						swapVideo(false); //false means B
+						timerID = setTimeout(swapVideo, lengthB, false);
+						break;
+					default:
+						return;
+				}
+				event.preventDefault();
+			}, true);
+			
+		</script>
+		
+		
+	</body>
+</html>
+
