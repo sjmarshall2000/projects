@@ -13,24 +13,7 @@ void setup() {
 }
 
 void loop() {
-  greenState = digitalRead(greenPin);
-  redState = digitalRead(redPin);
-  if (greenState != greenLastState) { //only enter this loop if state change
-    if (!greenState) {              //pin reads LOW, i.e. its connected to GND,-> pressed
-      Serial.print("A\n");
-    } else if (useEdgeDetection) {  //state change and pin reads HIGH,-> released
-      Serial.print("a\n");
-    }
-  }
-  if (redState != redLastState) {
-    if (!redState) {
-      Serial.print("B\n");
-    } else if (useEdgeDetection) {
-      Serial.print("b\n");
-    }
-
-  }
+  Serial.print("hello");
+    
   delay(50);
-  greenLastState = greenState;
-  redLastState = redState;
 }
