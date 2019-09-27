@@ -1,5 +1,12 @@
+//This code is the work of Stephen Marshall, 2019
+
 //7/11/19: as of today, the left/right pins are swapped
 //i.e. right is now pin 10, left is now pin 11 -hardware change
+//7/27/19: readjusting bounds to reflect physical installation:
+//UDMIN:  406
+//UDMAX:  647
+//LRMIN:  279
+//LRMAX:  500
 
 const bool potDebug = false;
 //PINS:###########
@@ -24,10 +31,11 @@ bool directions[4]; //will be constantly updated as joystick moves
 //directions: [up][right][down][left]
 int UDsensor = 0;//not sure why '=0'
 int LRsensor = 0;//zeroing out the values? or temp values?
- int UD_MIN = 450;//roughly measured values
- int UD_MAX = 550;
-const int LR_MIN = 400;//by ensuring their ar4 correctly oriented at time of assembly,
-const int LR_MAX = 600;//we can assume LR and UD are the same
+int UD_MIN = 406;//Exact Values as of 7/27/19
+int UD_MAX = 647;
+int LR_MIN = 279;//by ensuring their are correctly oriented at time of assembly,
+int LR_MAX = 500;//we can assume LR and UD are the same
+
 
 const bool invertPot = false; //broken feature, hard coded below
 
@@ -114,6 +122,10 @@ void homeSteppers(){
 void setup() {
   if(potDebug){
     Serial.begin(9600);
+    UD_MIN = 0;
+    UD_MAX = 1000;
+    LR_MIN = 0;
+    LR_MAX = 1000;
   }
   
   if(invertPot){ //for mounting the pot on the motor side
