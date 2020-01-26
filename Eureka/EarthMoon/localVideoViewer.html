@@ -1,0 +1,123 @@
+<!-- 	
+Stephen Marshall 7/25/19
+swapping to local file
+
+
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>website title</title>
+	</head>
+	<style>
+		body {
+			background-color: #000000;
+		}
+	</style>
+	<body>
+		
+		<video id="myVideo" width="1900" height="1040" loop autoplay>
+			<source src="video1.webm" type="video/webm">
+			
+		</video>
+		
+		<script>
+			var video_object = document.getElementById('myVideo');
+			
+			//var isLocal = true;
+			var oneVideo = false;
+			var aPlaying = true;
+			//in seconds:		(for local file)
+			var startA = 0;		//0:00
+			var endA = 180;		//3:00 = 60 + 60 + 60
+			
+			var startB = 0;		//0:00 
+			var endB = 142;		//2:22 = 60 + 60 + 22
+
+			var nameA = "video1.webm"; //must be .webm format
+			var nameB = "video2.webm";
+			var sourceA = nameA + "#t=" + startA + "," + endA;
+			var sourceB = nameB + "#t=" + startB + "," + endB;
+		
+			
+			
+			var timerID;
+			var timerRunning = false;
+			timerID = setInterval(checkProgress, 500);
+			
+			
+			function checkProgress(force=false) {	//restarts video if it has elapsed its time
+				//video_object.src = sourceA; video_object.load();	
+				if(force){
+					if(aPlaying){	video_object.currentTime = startA;video_object.play();}
+					else {			video_object.currentTime = startB;video_object.play();}
+					return;
+				}
+				
+				var time = video_object.currentTime;
+				if(aPlaying){//if A is selected
+					if(time > endA || time < startA){
+						onA();
+					}
+				}else {		//if B is selected
+					if(time > endB || time < startB){
+						onB();
+					}
+				}				
+			}
+			
+			function stopVideo() {
+				player.stopVideo();
+			}
+			
+			window.addEventListener("keydown", function (event) {
+				if(event.defaultPrevented) {
+					return; //do nothing if event already processed
+				}
+				switch (event.key) {
+					case "a":
+						onA();
+						break;
+					case "b":
+						onB();
+						break;
+					default:
+						return;
+				}
+				event.preventDefault();
+			}, true);
+			
+			function onA(){
+			if(true){ //these are meant to check APlaying
+				aPlaying = true;
+				if(oneVideo){
+					checkProgress(true);
+				} else {
+					if(video_object.src != sourceA){video_object.src = sourceA;}
+					//player.loadVideoById(videoID, startA, "large");
+					
+				}
+			}
+			}
+			
+			function onB(){
+			if(true){//ditto
+				aPlaying = false;
+				if(oneVideo){
+					checkProgress(true);
+				} else {
+					if(video_object.src != sourceB){video_object.src = sourceB;}
+					// player.loadVideoById(altVideoID, startB, "large");
+					
+				}
+				}
+			}
+			
+			
+		</script>
+		
+		
+	</body>
+</html>
+
