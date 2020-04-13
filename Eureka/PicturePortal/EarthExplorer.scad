@@ -5,7 +5,7 @@ RBolt=22;//mm
 DBolt=3.5;//mm
 DSeed=10;//mm
 PipeID=.75*25.4;//mm
-curveRes = 50;
+curveRes = 100;
 
 module wireLoop(up=5,LoopDiameter=7/*mm*/,WireDiameter=2/*mm*/) {
 N=16;
@@ -105,8 +105,9 @@ translate([0, 0, (25.4*5/8) +(25.4*1/4)])
         motorSide();    
 }
 //glassSlide();
-//potentiometerMotorMount();
+potentiometerMotorMount();
 //translate([0,30,0])
-scale([1,1,1.1])
-potSide(innerDiameter = 6);
+scale([1,1,1.1]){
+    //potSide(innerDiameter = 6);
+}
 //potAttach();

@@ -5,6 +5,9 @@ figuring out keyboard input
 M7lc1UVf-VE //youtube developer vid
 tzsZRse-qPE //ski footage test vid
 QDqskltCixA	//new earth video
+gTsJubN68WE //final earth video
+SPFpccTeh3Q //final reuploaded
+^(2:05-3:05, 4:12-6:45)
 -->
 
 <!DOCTYPE html>
@@ -26,13 +29,14 @@ QDqskltCixA	//new earth video
 		
 		
 		<script>
+			var isLocal = true;
 			var oneVideo = true;
 			var aPlaying = true;
 			//in seconds:		(for Youtube)
-			var startA = 60;	
-			var endA = 75;		//15 sec videos
-			var startB = 120;
-			var endB = 135;
+			var startA = 125;	
+			var endA = 185;		//15 sec videos
+			var startB = 252;
+			var endB = 405;
 			
 			//*not* in milliseconds	(for JavaScipt)
 			//const lengthA = (endA - startA);// * 1000;
@@ -41,36 +45,13 @@ QDqskltCixA	//new earth video
 			
 			var timerID;
 			var timerRunning = false;
-			var videoID = "QDqskltCixA"; //confusing name, videoId is YT's own
-			var altVideoID = "M7lc1UVf-VE"
 			
-			function onA(){
-				if(oneVideo){
-					aPlaying = true;
-					checkProgress(true);
-				} else {
-					player.loadVideoById({videoId:videoID,
-                      startSeconds:startB,
-                      endSeconds:endB,
-                      //suggestedQuality:String
-                      }):Void
-					
-				}
-			}
 			
-			function onB(){
-				if(oneVideo){
-					aPlaying = false;
-					checkProgress(true);
-				} else {
-					player.loadVideoById({videoId:altVideoID,
-                      startSeconds:startB,
-                      endSeconds:endB,
-                      //suggestedQuality:String
-                      }):Void
-					
-				}
-			}
+			var videoID = "SPFpccTeh3Q"; //confusing name, videoId is YT's own
+			
+			var altVideoID = "M7lc1UVf-VE" //altVideo is only if oneVideo == false
+			
+			
 		
 			// 2. This code loads the IFrame Player API code asynchronously.
 			var tag = document.createElement('script');
@@ -163,6 +144,30 @@ QDqskltCixA	//new earth video
 				}
 				event.preventDefault();
 			}, true);
+			
+			function onA(){
+			if(true){ //these are meant to check APlaying
+				aPlaying = true;
+				if(oneVideo){
+					checkProgress(true);
+				} else {
+					player.loadVideoById(videoID, startA, "large");
+					
+				}
+			}
+			}
+			
+			function onB(){
+			if(true){//ditto
+				aPlaying = false;
+				if(oneVideo){
+					checkProgress(true);
+				} else {
+					player.loadVideoById(altVideoID, startB, "large");
+					
+				}
+				}
+			}
 		</script>
 		
 		
